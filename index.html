@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Animal Kingdom - By: Niam Aaroh Pinnapu Reddy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body {
+      background: linear-gradient(to bottom, #1b381e, #0e2011);
+      color: #fff; min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; overflow: hidden; position: relative;
+    }
+    .vines {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .vine { position: absolute; top: 0; width: 4px; background: #2d5a27; height: 120px; }
+    .v1 { left: 10%; } .v2 { left: 88%; height: 150px; }
+    
+    .monkey {
+      position: absolute; top: 80px; font-size: 2.5rem;
+      animation: swing 3s ease-in-out infinite alternate; transform-origin: top center;
+    }
+    .m1 { left: 8%; animation-delay: 0s; }
+    .m2 { left: 86%; animation-delay: 1.5s; }
+
+    @keyframes swing {
+      0% { transform: rotate(-25deg); }
+      100% { transform: rotate(25deg); }
+    }
+
+    .game-card {
+      background: rgba(20, 45, 23, 0.95); border: 2px solid #4caf50;
+      border-radius: 20px; padding: 30px; width: 90%; max-width: 500px;
+      text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative; z-index: 10; backdrop-filter: blur(5px);
+    }
+
+    .title-main {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #8bc34a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .author-credit {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffeb3b;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    h2 { color: #8bc34a; font-size: 2.2rem; margin-bottom: 15px; }
+    p { margin-bottom: 20px; color: #ddf0d3; font-size: 1.1rem; line-height: 1.4; }
+
+    .counter { font-size: 0.95rem; color: #8bc34a; margin-bottom: 12px; font-weight: bold; }
+
+    .btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    button {
+      padding: 12px 20px; border: none; border-radius: 10px; font-weight: bold;
+      cursor: pointer; transition: transform 0.1s, background 0.2s; font-size: 1rem;
+    }
+    button:active { transform: scale(0.95); }
+    .btn-yes { background: #4caf50; color: #fff; }
+    .btn-no { background: #f44336; color: #fff; }
+    .btn-idk { background: #ff9800; color: #fff; }
+    .btn-action { background: #8bc34a; color: #1b381e; width: 100%; margin-top: 15px; }
+
+    .result-icon { font-size: 5.5rem; margin: 15px 0; display: flex; justify-content: center; align-items: center; }
+    .custom-img { width: 220px; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+  </style>
+</head>
+<body>
+
+  <div class="vines">
+    <div class="vine v1"><div class="monkey m1">🐒</div></div>
+    <div class="vine v2"><div class="monkey m2">🐒</div></div>
+  </div>
+
+  <div class="game-card">
+    <div class="title-main">🌴 THE ANIMAL KINGDOM 🌴</div>
+    <div class="author-credit">By: Niam Aaroh Pinnapu Reddy</div>
+
+    <div id="content">
+      <p>Think of an animal! The game asks smart adaptive questions to narrow down the choices.</p>
+      <button class="btn-action" onclick="startGame()">I'm Ready!</button>
+    </div>
+  </div>
+
+  <script>
+    const blackPantherSvg = `
+      <svg class="custom-img" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2a2d34" />
+            <stop offset="40%" stop-color="#121317" />
+            <stop offset="100%" stop-color="#050507" />
+          </linearGradient>
+          <linearGradient id="legGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1c1e22" />
+            <stop offset="100%" stop-color="#08080a" />
+          </linearGradient>
+        </defs>
+        
+        <path d="M 120 180 C 60 140 10 70 35 110 C 60 150 110 200 135 220" fill="none" stroke="#181a1f" stroke-width="26" stroke-linecap="round"/>
+        <path d="M 120 180 C 60 140 10 70 35 110 C 60 150 110 200 135 220" fill="none" stroke="url(#bodyGrad)" stroke-width="20" stroke-linecap="round"/>
+
+        <path d="M 170 240 Q 150 280 130 310 Q 120 325 150 330 Q 165 330 175 320 Q 185 270 200 240 Z" fill="url(#legGrad)" />
+        <path d="M 230 240 Q 210 280 190 320 Q 180 335 210 340 Q 225 340 235 330 Q 245 280 260 235 Z" fill="url(#bodyGrad)" />
+
+        <path d="M 125 215 C 150 170 220 165 310 170 C 370 175 420 190 440 215 C 410 270 330 280 250 275 C 180 270 140 250 125 215 Z" fill="url(#bodyGrad)" />
+
+        <path d="M 310 240 Q 300 290 280 335 Q 275 348 305 348 Q 320 348 325 335 Q 340 280 350 230 Z" fill="url(#legGrad)" />
+        <path d="M 380 230 Q 395 270 425 305 Q 445 325 470 315 Q 475 300 450 285 Q 410 250 395 215 Z" fill="url(#bodyGrad)" />
+
+        <path d="M 410 215 Q 425 170 460 185 Q 490 205 495 230 Q 480 260 440 250 Z" fill="url(#bodyGrad)" />
+        <path d="M 425 185 Q 420 160 440 170 Q 445 180 438 190 Z" fill="#121317" />
+
+        <ellipse cx="465" cy="205" rx="6" ry="8" fill="#ffd700" transform="rotate(-15 465 205)" />
+        <ellipse cx="465" cy="205" rx="2" ry="6" fill="#000" transform="rotate(-15 465 205)" />
+
+        <polygon points="492,230 497,233 490,237" fill="#222" />
+        <path d="M 475 235 Q 500 238 510 230 M 475 238 Q 500 243 512 238 M 475 240 Q 498 248 508 246" stroke="#ccc" stroke-width="1.5" fill="none" opacity="0.7" />
+      </svg>
+    `;
+
+    const axolotlSvg = `
+      <svg class="custom-img" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            .outline { stroke: #c85348; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+            .gill-fringe { stroke: #d9423d; stroke-width: 2.5; stroke-linecap: round; }
+            .fill-skin { fill: #fbd3d3; }
+            .fill-mouth { fill: #8d433e; }
+            .fill-throat { fill: #482c2a; }
+            .fill-eye { fill: #2d3032; }
+          </style>
+        </defs>
+        <path d="M 50 48 Q 28 32 20 18 C 24 28 35 38 52 42" class="fill-skin outline" />
+        <path d="M 22 18 L 18 22 M 25 21 L 21 26 M 28 25 L 24 30 M 32 28 L 28 34 M 36 32 L 32 38 M 41 36 L 37 42 M 45 40 L 42 45" class="gill-fringe" />
+        <path d="M 42 58 Q 18 48 10 38 C 16 48 28 56 46 62" class="fill-skin outline" />
+        <path d="M 12 38 L 8 43 M 16 42 L 12 47 M 21 46 L 17 51 M 26 50 L 22 55 M 31 54 L 27 59 M 37 57 L 33 63 M 43 61 L 40 66" class="gill-fringe" />
+        <path d="M 44 72 Q 22 75 14 85 C 22 80 34 78 48 78" class="fill-skin outline" />
+        <path d="M 15 84 L 11 88 M 20 81 L 16 86 M 26 79 L 22 84 M 32 78 L 28 83 M 38 77 L 35 82 M 44 76 L 41 81" class="gill-fringe" />
+        <path d="M 150 48 Q 172 32 180 18 C 176 28 165 38 148 42" class="fill-skin outline" />
+        <path d="M 178 18 L 182 22 M 175 21 L 179 26 M 172 25 L 176 30 M 168 28 L 172 34 M 164 32 L 168 38 M 159 36 L 163 42 M 155 40 L 158 45" class="gill-fringe" />
+        <path d="M 158 58 Q 182 48 190 38 C 184 48 172 56 154 62" class="fill-skin outline" />
+        <path d="M 188 38 L 192 43 M 184 42 L 188 47 M 179 46 L 183 51 M 174 50 L 178 55 M 169 54 L 173 59 M 163 57 L 167 63 M 157 61 L 160 66" class="gill-fringe" />
+        <path d="M 156 72 Q 178 75 186 85 C 178 80 166 78 152 78" class="fill-skin outline" />
+        <path d="M 185 84 L 189 88 M 180 81 L 184 86 M 174 79 L 178 84 M 168 78 L 172 83 M 162 77 L 165 82 M 156 76 L 159 81" class="gill-fringe" />
+        <ellipse cx="100" cy="62" rx="56" ry="46" class="fill-skin outline" />
+        <ellipse cx="100" cy="68" rx="38" ry="28" class="fill-mouth outline" />
+        <path d="M 68 76 Q 100 102 132 76 Z" class="fill-throat" />
+        <ellipse cx="73" cy="42" rx="4" ry="6" class="fill-eye" transform="rotate(-10 73 42)" />
+        <ellipse cx="127" cy="42" rx="4" ry="6" class="fill-eye" transform="rotate(10 127 42)" />
+      </svg>
+    `;
+
+    const questions = [
+      { text: "Does it live primarily in water?", key: "water" },
+      { text: "Can it fly or glide?", key: "fly" },
+      { text: "Is it a carnivore (eats meat or fish)?", key: "carnivore" },
+      { text: "Is it larger than an average human?", key: "large" },
+      { text: "Does it have 4 legs?", key: "fourLegs" },
+      { text: "Does it lay eggs?", key: "eggs" },
+      { text: "Is it commonly kept as a household pet?", key: "pet" },
+      { text: "Does it have fur or hair?", key: "fur" },
+      { text: "Does it live in cold or snowy climates?", key: "cold" },
+      { text: "Does it have spots, stripes, or distinct body patterns?", key: "pattern" },
+      { text: "Is it an insect or spider?", key: "bug" },
+      { text: "Does it spend a lot of time climbing or living in trees?", key: "treeTail" },
+      { text: "Is it a reptile or amphibian?", key: "reptileAmphibian" },
+      { text: "Is it known for moving very slowly or sleeping a lot?", key: "slow" },
+      { text: "Does it have an unusually long neck, tail, or body feature?", key: "longFeature" },
+      { text: "Is it famous for searching through trash or wearing a 'mask' pattern?", key: "maskPattern" },
+      { text: "Is it an aquatic pink/gill-headed creature capable of regenerating limbs?", key: "regenerate" },
+      { text: "Is it a sleek, dark black wild big cat?", key: "blackCat" },
+      { text: "Does it have sharp spikes, armor, or quills?", key: "spikes" },
+      { text: "Is it famous for producing milk or wool on a farm?", key: "farm" }
+    ];
+
+    const animals = [
+      { name: "Black Panther", customSvg: blackPantherSvg, traits: { water: false, fly: false, carnivore: true, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: true, spikes: false, farm: false } },
+      { name: "Wolf", emoji: "🐺", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: true, eggs: false, pet: false, fur: true, cold: true, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Hedgehog", emoji: "🦔", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: true, eggs: false, pet: true, fur: true, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: true, farm: false } },
+      { name: "Hippo", emoji: "🦛", traits: { water: true, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Zebra", emoji: "🦓", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Snake", emoji: "🐍", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: false, eggs: true, pet: true, fur: false, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: true, slow: false, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Cow", emoji: "🐄", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: true, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: true } },
+      { name: "Pig", emoji: "🐖", traits: { water: false, fly: false, carnivore: false, large: false, fourLegs: true, eggs: false, pet: true, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: true } },
+      { name: "Rhino", emoji: "🦏", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: true, farm: false } },
+      { name: "Gorilla", emoji: "🦍", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: false, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Raccoon", emoji: "🦝", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: true, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: true, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Axolotl", customSvg: axolotlSvg, traits: { water: true, fly: false, carnivore: true, large: false, fourLegs: true, eggs: true, pet: true, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: true, slow: false, longFeature: true, maskPattern: false, regenerate: true, blackCat: false, spikes: false, farm: false } },
+      { name: "Squirrel", emoji: "🐿️", traits: { water: false, fly: false, carnivore: false, large: false, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Flamingo", emoji: "🦩", traits: { water: true, fly: true, carnivore: false, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Cheetah", emoji: "🐆", traits: { water: false, fly: false, carnivore: true, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Chameleon", emoji: "🦎", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: true, eggs: true, pet: true, fur: false, cold: false, pattern: true, bug: false, treeTail: true, reptileAmphibian: true, slow: true, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Giraffe", emoji: "🦒", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Sloth", emoji: "🦥", traits: { water: false, fly: false, carnivore: false, large: false, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: true, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Koala", emoji: "🐨", traits: { water: false, fly: false, carnivore: false, large: false, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: true, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Bat", emoji: "🦇", traits: { water: false, fly: true, carnivore: true, large: false, fourLegs: false, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Jellyfish", emoji: "🪼", traits: { water: true, fly: false, carnivore: true, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: true, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Chimpanzee", emoji: "🐒", traits: { water: false, fly: false, carnivore: false, large: false, fourLegs: false, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Platypus", emoji: "🦆", traits: { water: true, fly: false, carnivore: true, large: false, fourLegs: true, eggs: true, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Dolphin", emoji: "🐬", traits: { water: true, fly: false, carnivore: true, large: true, fourLegs: false, eggs: false, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Blue Whale", emoji: "🐋", traits: { water: true, fly: false, carnivore: true, large: true, fourLegs: false, eggs: false, pet: false, fur: false, cold: true, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Great White Shark", emoji: "🦈", traits: { water: true, fly: false, carnivore: true, large: true, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Goldfish", emoji: "🐠", traits: { water: true, fly: false, carnivore: false, large: false, fourLegs: false, eggs: true, pet: true, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Octopus", emoji: "🐙", traits: { water: true, fly: false, carnivore: true, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Sea Turtle", emoji: "🐢", traits: { water: true, fly: false, carnivore: false, large: false, fourLegs: true, eggs: true, pet: true, fur: false, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: true, slow: true, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Eagle", emoji: "🦅", traits: { water: false, fly: true, carnivore: true, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Parrot", emoji: "🦜", traits: { water: false, fly: true, carnivore: false, large: false, fourLegs: false, eggs: true, pet: true, fur: false, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Owl", emoji: "🦉", traits: { water: false, fly: true, carnivore: true, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Penguin", emoji: "🐧", traits: { water: true, fly: false, carnivore: true, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: true, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Lion", emoji: "🦁", traits: { water: false, fly: false, carnivore: true, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Tiger", emoji: "🐅", traits: { water: false, fly: false, carnivore: true, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Elephant", emoji: "🐘", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: true, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Dog", emoji: "🐶", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: true, eggs: false, pet: true, fur: true, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Cat", emoji: "🐱", traits: { water: false, fly: false, carnivore: true, large: false, fourLegs: true, eggs: false, pet: true, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Panda", emoji: "🐼", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: true, eggs: false, pet: false, fur: true, cold: false, pattern: true, bug: false, treeTail: false, reptileAmphibian: false, slow: true, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Monkey", emoji: "🐒", traits: { water: false, fly: false, carnivore: false, large: false, fourLegs: false, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: true, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Kangaroo", emoji: "🦘", traits: { water: false, fly: false, carnivore: false, large: true, fourLegs: false, eggs: false, pet: false, fur: true, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Crocodile", emoji: "🐊", traits: { water: true, fly: false, carnivore: true, large: true, fourLegs: true, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: true, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Frog", emoji: "🐸", traits: { water: true, fly: false, carnivore: true, large: false, fourLegs: true, eggs: true, pet: false, fur: false, cold: false, pattern: false, bug: false, treeTail: false, reptileAmphibian: true, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Butterfly", emoji: "🦋", traits: { water: false, fly: true, carnivore: false, large: false, fourLegs: false, eggs: true, pet: false, fur: false, cold: false, pattern: true, bug: true, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } },
+      { name: "Honeybee", emoji: "🐝", traits: { water: false, fly: true, carnivore: false, large: false, fourLegs: false, eggs: true, pet: false, fur: true, cold: false, pattern: true, bug: true, treeTail: false, reptileAmphibian: false, slow: false, longFeature: false, maskPattern: false, regenerate: false, blackCat: false, spikes: false, farm: false } }
+    ];
+
+    let candidates = [];
+    let askedKeys = [];
+    let qCount = 0;
+
+    function startGame() {
+      candidates = [...animals];
+      askedKeys = [];
+      qCount = 0;
+      askNextQuestion();
+    }
+
+    function askNextQuestion() {
+      if (candidates.length <= 2 || askedKeys.length >= questions.length) {
+        makeGuess();
+        return;
+      }
+
+      let bestQ = null;
+      let bestDiff = Infinity;
+
+      for (let q of questions) {
+        if (askedKeys.includes(q.key)) continue;
+
+        let yesCount = candidates.filter(a => a.traits[q.key] === true).length;
+        let noCount = candidates.filter(a => a.traits[q.key] === false).length;
+        let diff = Math.abs(yesCount - noCount);
+
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          bestQ = q;
+        }
+      }
+
+      if (!bestQ) {
+        makeGuess();
+        return;
+      }
+
+      askedKeys.push(bestQ.key);
+      qCount++;
+
+      document.getElementById('content').innerHTML = `
+        <div class="counter">Question ${qCount} | Candidates Remaining: ${candidates.length}</div>
+        <p><strong>${bestQ.text}</strong></p>
+        <div class="btn-group">
+          <button class="btn-yes" onclick="answer('${bestQ.key}', true)">Yes</button>
+          <button class="btn-no" onclick="answer('${bestQ.key}', false)">No</button>
+          <button class="btn-idk" onclick="answer('${bestQ.key}', null)">I Don't Know</button>
+        </div>
+      `;
+    }
+
+    function answer(key, val) {
+      if (val !== null) {
+        candidates = candidates.filter(a => a.traits[key] === val);
+      }
+      
+      if (candidates.length === 0) {
+        candidates = [...animals];
+      }
+
+      askNextQuestion();
+    }
+
+    function makeGuess() {
+      const best = candidates[0] || animals[0];
+      const displayGraphic = best.customSvg ? best.customSvg : best.emoji;
+      
+      document.getElementById('content').innerHTML = `
+        <p>I narrowed it down! Is your animal a...</p>
+        <div class="result-icon">${displayGraphic}</div>
+        <h2>${best.name}!</h2>
+        <button class="btn-action" onclick="startGame()">Play Again</button>
+      `;
+    }
+  </script>
+</body>
+</html>
